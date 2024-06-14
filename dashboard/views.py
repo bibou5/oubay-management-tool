@@ -23,6 +23,22 @@ def project_status_data(request):
     }
     return JsonResponse(data)
 
+def task_status_data(request):
+    tasks_not_started = Task.objects.filter(assigned_to=request.user,status="Not Started").count()
+    tasks_in_progress = Task.objects.filter(assigned_to=request.user,status="In Progress").count()
+    tasks_completed = Task.objects.filter(assigned_to=request.user,status="Completed").count()
+
+    data = {
+        'labels': ['Not Started', 'In Progress', 'Completed'],
+        'data': [tasks_not_started, tasks_in_progress, tasks_completed],
+        'backgroundColor': [
+            'rgb(255, 99, 132)',  # Red for Not Started
+            'rgb(54, 162, 235)',  # Blue for In Progress
+            'rgb(75, 192, 192)'   # Green for Completed
+        ]
+    }
+    return JsonResponse(data)
+
 
 def dashboard(request):
     projects = Project.objects.all()
@@ -30,8 +46,10 @@ def dashboard(request):
     users = User.objects.all()
     context = {
         'projects':projects.count(),
+        'my_projects':projects.filter(members=request.user),
         'projects_in_progress':projects.filter(status="In Progress"),
         'tasks_number':tasks.count(),
+        'my_tasks':tasks.filter(assigned_to=request.user),
         'important_tasks':tasks.filter(priority_level="High"),
         'users_number':users.count(),
     }

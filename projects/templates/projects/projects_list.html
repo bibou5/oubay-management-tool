@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<main id="main" class="main">
+    <div class="col-12">
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            {% if request.user.groups.all.0.name == "Admin" %}
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+                All tasks
+                <a href="{% url 'add_project' %}" class="btn btn-success">Create Project</a>
+            </h5>
+            {% endif %}
+            <h5 class="card-title">All Projects</h5>
+
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">More</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for project in projects %}
+                    <tr>
+                      <td>{{project.title}}</td>
+                      <td>{{project.start_date}}</td>
+                      <td>{{project.end_date}}</td>
+                      <td><button class="btn btn-secondary"><a href="{% url 'project_details' project.id %}" class="bi bi-three-dots" style="color: white;"></a></button></td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+</main><!-- End #main -->
+{% endblock content %}
