@@ -5,13 +5,11 @@
     <div class="col-12">
         <div class="card top-selling overflow-auto">
           <div class="card-body pb-0">
-            {% if request.user.groups.all.0.name == "Admin" %}
             <h5 class="card-title d-flex justify-content-between align-items-center">
                 All tasks
-                <a href="{% url 'add_project' %}"  class="btn btn-success">Create Task</a>
+                <a href="{% url 'add_task' %}"  class="btn btn-success">Create Task</a>
             </h5>
-            {% endif %}
-
+            {% if tasks|length > 0 %}
             <table class="table table-borderless">
               <thead>
                 <tr>
@@ -36,6 +34,9 @@
                 {% endfor %}
               </tbody>
             </table>
+            {% else %}  
+            <p>There are no tasks</p>
+            {% endif %}
           </div>
         </div>
       </div>

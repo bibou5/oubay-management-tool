@@ -24,70 +24,60 @@
           <!-- Sales Card -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card sales-card">
-
               <div class="card-body">
                 <h5 class="card-title">Projects <span> | Number</span></h5>
-
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-cart"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{projects}}</h6>
+                    <h6>{{ projects }}</h6>
                   </div>
                 </div>
               </div>
-
             </div>
           </div><!-- End Sales Card -->
 
           <!-- Revenue Card -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
-
               <div class="card-body">
                 <h5 class="card-title">Tasks <span>| Number</span></h5>
-
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-list-task"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{tasks_number}}</h6>
+                    <h6>{{ tasks_number }}</h6>
                   </div>
                 </div>
               </div>
-
             </div>
           </div><!-- End Revenue Card -->
+
           <!-- Customers Card -->
           <div class="col-xxl-4 col-xl-12">
-
             <div class="card info-card customers-card">
               <div class="card-body">
                 <h5 class="card-title">Employees <span>| Number</span></h5>
-
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{users_number}}</h6>
-
+                    <h6>{{ users_number }}</h6>
                   </div>
                 </div>
-
               </div>
             </div>
-
           </div><!-- End Customers Card -->
 
           <!-- Reports -->
           <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Projects</h5>
-        
+                    <h5 class="card-title">Projects Status</h5>
+                    {% if projects > 0 %}
                     <!-- Pie Chart -->
                     <canvas id="pieChart" style="max-height: 400px;"></canvas>
                     <script>
@@ -119,19 +109,20 @@
                         });
                     </script>
                     <!-- End Pie Chart -->
-        
+                    {% else %}
+                    <p>There are no projects</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
           <!-- End Reports -->
-
 
           <!-- Top Selling -->
           <div class="col-12">
             <div class="card top-selling overflow-auto">
               <div class="card-body pb-0">
                 <h5 class="card-title">Projects <span>| In Progress</span></h5>
-
+                {% if projects_in_progress|length > 0 %}
                 <table class="table table-borderless">
                   <thead>
                     <tr>
@@ -144,17 +135,18 @@
                   <tbody>
                     {% for project in projects_in_progress %}
                     <tr>
-                      <td>{{project.title}}</td>
-                      <td>{{project.start_date}}</td>
-                      <td>{{project.end_date}}</td>
+                      <td>{{ project.title }}</td>
+                      <td>{{ project.start_date }}</td>
+                      <td>{{ project.end_date }}</td>
                       <td><button class="btn btn-secondary"><a href="{% url 'project_details' project.id %}" class="bi bi-three-dots" style="color: white;"></a></button></td>
                     </tr>
                     {% endfor %}
                   </tbody>
                 </table>
-
+                {% else %}
+                <p>There are no projects in progress</p>
+                {% endif %}
               </div>
-
             </div>
           </div><!-- End Top Selling -->
 
@@ -166,21 +158,22 @@
 
         <!-- Recent Activity -->
         <div class="card">
-
           <div class="card-body">
             <h5 class="card-title">Important Tasks <span>| Today</span></h5>
-
+            {% if important_tasks|length > 0 %}
             <div class="activity">
               {% for task in important_tasks %}
               <div class="activity-item d-flex">
                 <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
                 <div class="activity-content">
-                  {{task.description}}
+                  {{ task.description }}
                 </div>
               </div><!-- End activity item-->
               {% endfor %}
             </div>
-
+            {% else %}
+            <p>There are no important tasks for today</p>
+            {% endif %}
           </div>
         </div><!-- End Recent Activity -->
 
@@ -188,7 +181,6 @@
 
     </div>
   </section>
-
 </main><!-- End #main -->
 {% else %}
 <main id="main" class="main">
@@ -212,40 +204,34 @@
           <!-- Sales Card -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card sales-card">
-
               <div class="card-body">
                 <h5 class="card-title">My Projects <span> | Number</span></h5>
-
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-cart"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{projects}}</h6>
+                    <h6>{{ projects }}</h6>
                   </div>
                 </div>
               </div>
-
             </div>
           </div><!-- End Sales Card -->
 
           <!-- Revenue Card -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
-
               <div class="card-body">
                 <h5 class="card-title">My Tasks <span>| Number</span></h5>
-
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-list-task"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{tasks_number}}</h6>
+                    <h6>{{ tasks_number }}</h6>
                   </div>
                 </div>
               </div>
-
             </div>
           </div><!-- End Revenue Card -->
 
@@ -253,8 +239,8 @@
           <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">My Tasks</h5>
-        
+                    <h5 class="card-title">My Tasks Status</h5>
+                    {% if tasks_number > 0 %}
                     <!-- Pie Chart -->
                     <canvas id="pieChart" style="max-height: 400px;"></canvas>
                     <script>
@@ -286,20 +272,20 @@
                         });
                     </script>
                     <!-- End Pie Chart -->
-        
+                    {% else %}
+                    <p>There are no tasks</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
           <!-- End Reports -->
 
-
           <!-- Top Selling -->
           <div class="col-12">
             <div class="card top-selling overflow-auto">
-
               <div class="card-body pb-0">
                 <h5 class="card-title">My Projects</h5>
-
+                {% if my_projects|length > 0 %}
                 <table class="table table-borderless">
                   <thead>
                     <tr>
@@ -312,17 +298,18 @@
                   <tbody>
                     {% for project in my_projects %}
                     <tr>
-                      <td>{{project.title}}</td>
-                      <td>{{project.start_date}}</td>
-                      <td>{{project.end_date}}</td>
+                      <td>{{ project.title }}</td>
+                      <td>{{ project.start_date }}</td>
+                      <td>{{ project.end_date }}</td>
                       <td><button class="btn btn-secondary"><a style=" color:white" href="{% url 'project_details' project.id %}" class="bi bi-three-dots"></a></button></td>
                     </tr>
                     {% endfor %}
                   </tbody>
                 </table>
-
+                {% else %}
+                <p>There are no projects</p>
+                {% endif %}
               </div>
-
             </div>
           </div><!-- End Top Selling -->
 
@@ -334,21 +321,22 @@
 
         <!-- Recent Activity -->
         <div class="card">
-
           <div class="card-body">
             <h5 class="card-title">My Tasks <span>| Today</span></h5>
-
+            {% if my_tasks|length > 0 %}
             <div class="activity">
               {% for task in my_tasks %}
               <div class="activity-item d-flex">
                 <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
                 <div class="activity-content">
-                  {{task.description}} <span> | {{task.project}}</span>
+                  {{ task.description }} <span> | {{ task.project }}</span>
                 </div>
               </div><!-- End activity item-->
               {% endfor %}
             </div>
-
+            {% else %}
+            <p>There are no tasks for today</p>
+            {% endif %}
           </div>
         </div><!-- End Recent Activity -->
 
@@ -363,4 +351,5 @@
 <p>User is not in any group</p>
 {% endif %}
 {% endblock content %}
+
 
