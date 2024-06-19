@@ -25,7 +25,7 @@
                       <td>{{project.title}}</td>
                       <td>{{project.start_date}}</td>
                       <td>{{project.end_date}}</td>
-                      <td><button class="btn btn-secondary"><a href="{% url 'project_details' project.id %}" class="bi bi-three-dots" style="color: white;"></a></button></td>
+                      <td><button class="btn btn-secondary"><a href="{% url 'project_details' project.slug %}" class="bi bi-three-dots" style="color: white;"></a></button></td>
                     </tr>
                 {% endfor %}
               </tbody>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<main id="main" class="main">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">
+        <i class="bi bi-exclamation-circle"></i> {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class="pagetitle">
+        <h1>Login</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+            <li class="breadcrumb-item active">Login</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+    <form method="POST">
+        
+        {{form|crispy}}
+        {% csrf_token %}
+        <br>
+        <a href="{% url 'signup' %}">Create Account</a>
+        <br>
+        <a href="{% url 'password_reset' %}">Reset Password ?</a>
+        <br>
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</main><!-- End #main -->
+{% endblock content %}

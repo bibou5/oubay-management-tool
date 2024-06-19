@@ -3,6 +3,10 @@ from django.http import JsonResponse
 from projects.models import Project
 from tasks.models import Task
 from django.contrib.auth.models import User
+from users.models import ProfileRequest
+from django.contrib.auth.decorators import login_required
+
+
 
 
 # Create your views here.
@@ -40,12 +44,14 @@ def task_status_data(request):
     return JsonResponse(data)
 
 
+@login_required(login_url='login')
 def dashboard(request):
     projects = Project.objects.all()
     tasks = Task.objects.all()
     users = User.objects.all()
     context = {
         'projects':projects.count(),
+        'my_profile':ProfileRequest.objects.get(user=request.user),
         'my_projects':projects.filter(members=request.user),
         'projects_in_progress':projects.filter(status="In Progress"),
         'tasks_number':tasks.count(),

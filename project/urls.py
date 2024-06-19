@@ -16,12 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('bibou/', admin.site.urls),
     path('',include('dashboard.urls')),
     path('users/',include('users.urls')),
     path('projects/',include('projects.urls')),
     path('tasks/',include('tasks.urls')),
-    path('notifications/',include('notifications.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

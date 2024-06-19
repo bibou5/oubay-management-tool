@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<main id="main" class="main">
+    <div class="col-12">
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              All Requests
+            </h5>
+            {% if requests|length > 0 %}
+            <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Approve</th>
+                    <th scope="col">Reject</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                    <tr>
+                    <td>{{request.user.username}}</td>
+                    <td>{{request.user.email}}</td>
+                    <td>{{request.phone_number}}</td>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="request_id" value="{{request.id}}">
+                        <td><button type="submit" name="approve" class="btn btn-success">Approve</button></td>
+                        <td><button type="submit" name="reject" class="btn btn-danger">Reject</button></td>
+                    </form>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            {% else %}
+            <p>There are no requests</p>
+            {% endif %}
+            
+
+          </div>
+
+        </div>
+      </div>
+</main><!-- End #main -->
+{% endblock content %}

@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
-from .decorators import admin_required
-from .utils import is_admin
+from .decorators import admin_required,is_admin
 from .models import Project
 from .forms import ProjectForm
 
@@ -14,8 +13,8 @@ def projects_list(request):
     }
     return render(request,'projects/projects_list.html',context)
 
-def project_details(request,id):
-    project = Project.objects.get(id=id)
+def project_details(request,slug):
+    project = Project.objects.get(slug=slug)
     if request.method == "POST":
         if "update_project" in request.POST and is_admin(request.user):
             form = ProjectForm(request.POST,instance=project)

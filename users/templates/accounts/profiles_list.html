@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<main id="main" class="main">
+    <div class="col-12">
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              All Profiles
+            </h5>
+            {% if profiles|length > 0 %}
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">More</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for profile in profiles %}
+                    <tr>
+                      <td>{{profile.user.username}}</td>
+                      <td>{{profile.user.email}}</td>
+                      <td>{{profile.phone_number}}</td>
+                      <td><button class="btn btn-secondary"><a href="{% url 'profile_details' profile.slug %}" class="bi bi-three-dots" style="color: white;"></a></button></td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+            <p>There are no profiles</p>
+            {% endif %}
+            
+
+          </div>
+
+        </div>
+      </div>
+</main><!-- End #main -->
+{% endblock content %}

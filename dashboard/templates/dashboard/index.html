@@ -211,7 +211,7 @@
                     <i class="bi bi-cart"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{ projects }}</h6>
+                    <h6>{{ my_projects.count }}</h6>
                   </div>
                 </div>
               </div>
@@ -228,7 +228,7 @@
                     <i class="bi bi-list-task"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{ tasks_number }}</h6>
+                    <h6>{{ my_tasks.count }}</h6>
                   </div>
                 </div>
               </div>
@@ -240,7 +240,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">My Tasks Status</h5>
-                    {% if tasks_number > 0 %}
+                    {% if my_tasks|length > 0 %}
                     <!-- Pie Chart -->
                     <canvas id="pieChart" style="max-height: 400px;"></canvas>
                     <script>

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .decorators import admin_required
-from .utils import is_admin
+from .decorators import admin_required,is_admin
+
 from .models import Task
 from .forms import TaskForm
 
@@ -14,8 +14,8 @@ def tasks_list(request):
     }
     return render(request,'tasks/tasks_list.html',context)
 
-def task_details(request,id):
-    task = Task.objects.get(id=id)
+def task_details(request,slug):
+    task = Task.objects.get(slug=slug)
     if request.method == "POST":
         if "update_task" in request.POST and is_admin(request.user):
             form = TaskForm(request.POST,instance=task)

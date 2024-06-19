@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div style=" margin-bottom: 20px;" class="pagetitle">
+    <h1>404 Error</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+        <li class="breadcrumb-item active">404 Error</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+  <article style="text-align: center;margin: 50px auto;max-width: 600px;" class="error-page">
+    <h1>Page Not Found</h1>
+    <div>
+        <p>Sorry, but the page you were trying to view does not exist.</p>
+        <p><a href="{% url 'dashboard' %}">Go to Home Page</a></p>
+    </div>
+</article>
+{% endblock content %}
+
+
+
