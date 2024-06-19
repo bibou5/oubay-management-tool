@@ -53,14 +53,16 @@
     </div><!-- End Logo -->
     <nav class="header-nav ms-auto">
       <ul>
-
-        <li class="nav-item dropdown pe-3">
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{% url 'profile' %}">
-            <img src="{{ request.user.profilerequest.profile_picture.url }}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block ps-2">{{ request.user.profilerequest.user.username }}</span>
-          </a>
-        </li>
-        <!-- End Profile Nav -->
+{% if request.user.is_authenticated %}*
+<li class="nav-item dropdown pe-3">
+  <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{% url 'profile' %}">
+    <img src="{{ request.user.profilerequest.profile_picture.url }}" alt="Profile" class="rounded-circle">
+    <span class="d-none d-md-block ps-2">{{ request.user.profilerequest.user.username }}</span>
+  </a>
+</li>
+<!-- End Profile Nav -->
+{% endif %}
+        
 
       </ul>
     </nav><!-- End Icons Navigation -->
