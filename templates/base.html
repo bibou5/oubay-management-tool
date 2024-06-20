@@ -53,7 +53,7 @@
     </div><!-- End Logo -->
     <nav class="header-nav ms-auto">
       <ul>
-{% if request.user.is_authenticated %}*
+{% if request.user.is_authenticated %}
 <li class="nav-item dropdown pe-3">
   <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{% url 'profile' %}">
     <img src="{{ request.user.profilerequest.profile_picture.url }}" alt="Profile" class="rounded-circle">

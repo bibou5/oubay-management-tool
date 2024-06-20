@@ -20,7 +20,7 @@ def project_details(request,slug):
             form = ProjectForm(request.POST,instance=project)
             if form.is_valid():
                 form.save()
-                return redirect('project_details',id)
+                return redirect('project_details',slug)
         elif "delete_project" in request.POST and is_admin(request.user):
             project.delete()
             return redirect('dashboard')

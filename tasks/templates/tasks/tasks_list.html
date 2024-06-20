@@ -29,7 +29,7 @@
                       <td>{{task.priority_level}}</td>
                       <td>{{task.status}}</td>
                       <td>{{task.project}}</td>
-                      <td><a href="{% url 'task_details' task.id %}" class="btn btn-secondary text-white"><i class="bi bi-three-dots"></i></a></td>
+                      <td><a href="{% url 'task_details' task.slug %}" class="btn btn-secondary text-white"><i class="bi bi-three-dots"></i></a></td>
                     </tr>
                 {% endfor %}
               </tbody>

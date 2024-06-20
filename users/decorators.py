@@ -27,13 +27,5 @@ def redirect_authenticated_user(view_func):
     return _wrapped_view
 
 
-def request_submission_required(view_func):
-    @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
-        if request.session.get('request_submitted'):
-            return view_func(request, *args, **kwargs)
-        else:
-            return redirect('dashboard')  
-    return _wrapped_view
 
 

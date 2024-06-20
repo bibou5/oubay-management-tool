@@ -21,7 +21,7 @@ def task_details(request,slug):
             form = TaskForm(request.POST,instance=task)
             if form.is_valid():
                 form.save()
-                return redirect('task_details',id=id)
+                return redirect('task_details',slug)
         elif "delete_task" in request.POST and is_admin(request.user):
             task.delete()
             return redirect('dashboard')

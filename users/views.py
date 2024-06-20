@@ -24,10 +24,13 @@ def signup(request):
         profile_form = ProfileRequestForm()
     return render(request,'registration/signup.html',{'user_form':user_form,"profile_form":profile_form})
 
-@request_submission_required
+
 def sucess_page(request):
-    request.session.pop('request_submitted')
-    return render(request,'registration/request_success.html')
+    if request.session.get('request_submitted',False):
+        del request.session['request_submitted']
+        return render(request,'registration/request_success.html')
+    else:
+        return redirect('signup')
 
 @admin_required
 def profile_requests_list(request):
@@ -54,7 +57,6 @@ def login_view(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            print("Form is valid")
             username = request.POST.get('username')
             password = request.POST.get('password')
             user = authenticate(request, username=username, password=password)
@@ -74,10 +76,15 @@ def login_view(request):
 @login_required(login_url='login')
 def logout_view(request):
     logout(request)
+    request.session['logged_out'] = True
     return redirect('logged_out')
 
 def logged_out(request):
-    return render(request, 'registration/logged_out.html')
+    if request.session.get('logged_out',False):
+        del request.session['logged_out']
+        return render(request, 'registration/logged_out.html')
+    else:
+        return redirect('login')
 
 
 @login_required(login_url='login')
