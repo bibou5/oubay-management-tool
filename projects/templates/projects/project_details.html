@@ -111,7 +111,7 @@
                                         <form method="POST" >
                                             {% csrf_token %}
                                             <button type="submit" name="delete_project" class="btn btn-danger">Delete</button>
-                                            <a href="{% url 'project_details' project.id %}" class="btn btn-secondary">Cancel</a>
+                                            <a href="{% url 'project_details' project.slug %}" class="btn btn-secondary">Cancel</a>
                             </div>
                             {% endif %}
                         </div><!-- End Bordered Tabs -->

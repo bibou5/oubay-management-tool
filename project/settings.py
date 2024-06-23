@@ -41,13 +41,22 @@ else:
 ALLOWED_HOSTS = ['*']
 
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer', 
+    },
+}
+
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'admin_honeypot',
     'crispy_forms',
     "crispy_bootstrap4",
     "bootstrap5",
+    'notifications.apps.NotificationsConfig',
     'dashboard.apps.DashboardConfig',
     'projects.apps.ProjectsConfig',
     'tasks.apps.TasksConfig',
@@ -59,6 +68,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+ASGI_APPLICATION = 'project.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

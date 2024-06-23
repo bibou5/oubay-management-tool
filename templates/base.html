@@ -53,15 +53,41 @@
     </div><!-- End Logo -->
     <nav class="header-nav ms-auto">
       <ul>
-{% if request.user.is_authenticated %}
-<li class="nav-item dropdown pe-3">
-  <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{% url 'profile' %}">
-    <img src="{{ request.user.profilerequest.profile_picture.url }}" alt="Profile" class="rounded-circle">
-    <span class="d-none d-md-block ps-2">{{ request.user.profilerequest.user.username }}</span>
-  </a>
-</li>
-<!-- End Profile Nav -->
-{% endif %}
+        {% if request.user.is_authenticated %}
+        <nav class="header-nav ms-auto">
+          <ul class="d-flex align-items-center">
+
+            <li class="nav-item dropdown">
+              <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                  <i class="bi bi-bell"></i>
+                  <span id="notifications-number-badge" class="badge bg-primary badge-number">{{ request.user.notifications.all|length }}</span>
+              </a><!-- End Notification Icon -->
+          
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" id="notifications_list">
+                  {% for notification in request.user.notifications.all|dictsort:"created_at"|slice:":5" %}
+                  <li class="notification-item">
+                      <i class="bi bi-exclamation-circle text-warning"></i>
+                      <div>
+                          <p>{{ notification.message }}</p>
+                      </div>
+                      <hr class="dropdown-divider">
+                  </li>
+                  {% endfor %}
+              </ul><!-- End Notification Dropdown Items -->
+          </li>
+        
+            <li class="nav-item pe-3">
+        
+              <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{% url 'profile' %}">
+                <img src="{{ request.user.profilerequest.profile_picture.url }}" alt="Profile" class="rounded-circle">
+                <span class="d-none d-md-block ps-2">{{ request.user.username }}</span>
+              </a><!-- End Profile Iamge Icon -->
+            </li><!-- End Profile Nav -->
+        
+          </ul>
+        </nav><!-- End Icons Navigation -->
+        {% endif %}
+        
         
 
       </ul>
@@ -174,6 +200,61 @@
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const notificationSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/notifications/'
+        );
+
+        const notificationsList = document.getElementById('notifications_list');
+
+        // Function to prepend new notification item
+        function prependNotification(message) {
+            const newNotificationItem = `
+                <li class="notification-item">
+                    <i class="bi bi-exclamation-circle text-warning"></i>
+                    <div>
+                        <p>${message}</p>
+                    </div>
+                    <hr class="dropdown-divider">
+                </li>
+            `;
+            notificationsList.insertAdjacentHTML('beforeend', newNotificationItem);
+
+            // Limit the number of displayed notifications to 5
+            const notificationItems = notificationsList.querySelectorAll('.notification-item');
+            if (notificationItems.length > 5) {
+                notificationsList.removeChild(notificationItems[0]); // Remove the oldest notification
+            }
+        }
+
+        // WebSocket onmessage event handler
+        notificationSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            prependNotification(data.message);
+            
+            // Update the notification count badge
+            const notificationCountBadge = document.getElementById('notifications-number-badge');
+            notificationCountBadge.textContent = parseInt(notificationCountBadge.textContent) + 1;
+        };
+
+        notificationSocket.onclose = function(e) {
+            console.error('Notification socket closed unexpectedly');
+        };
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
 
   <!-- Vendor JS Files -->
   <script src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
