@@ -40,13 +40,21 @@ else:
 
 ALLOWED_HOSTS = ['*']
 
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer', 
-    },
-}
-
+if ENVIRONMENT == "development":
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels.layers.InMemoryChannelLayer', 
+        },
+    }
+else:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer', 
+            'CONFIG':{
+                'hosts':[(env('REDIS_URL'))],
+            }
+        },
+    }
 # Application definition
 
 INSTALLED_APPS = [

@@ -5,11 +5,12 @@ from .forms import CreateNotificationForm
 from django.contrib import messages
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from .decorators import admin_required
 
 
 # Create your views here.
 
-
+@admin_required
 def add_notification(request):
     if request.method == "POST":
         form = CreateNotificationForm(request.POST)
